@@ -371,12 +371,16 @@
         </div>
     </div>
 
-    <!-- Script with Advanced Scoring Logic -->
+    <!-- Script with Corrected & Smart Scoring Logic -->
     <script>
         const answers = {
             p1q1: 'F', p1q2: 'T', p1q3: 'F', p1q4: 'T', p1q5: 'F',
             p2q1: 'C', p2q2: 'B', p2q3: 'B', p2q4: 'C', p2q5: 'C',
-            p3q1: 'meanings', p3q2: 'feelings', p3q3: 'big argument', p3q4: 'experience', p3q5: 'misunderstandings'
+            p3q1: ['meanings', 'meaning'],
+            p3q2: ['feelings', 'feeling'],
+            p3q3: ['big argument', 'big arguments'],
+            p3q4: ['experience', 'experiences'],
+            p3q5: ['misunderstandings', 'misunderstanding']
         };
 
         function toggleTranscript() {
@@ -422,7 +426,14 @@
                     userVal = el.value.trim().toLowerCase();
                 }
 
-                if (userVal === answers[q].toLowerCase()) {
+                let isCorrect = false;
+                if (q.startsWith('p3')) {
+                    isCorrect = answers[q].includes(userVal);
+                } else {
+                    isCorrect = (userVal === answers[q].toLowerCase());
+                }
+
+                if (isCorrect) {
                     totalScore += (10 / 15);
                     container.classList.add('border-emerald-500/80', 'bg-emerald-950/20');
                     if (q.startsWith('p1')) p1Correct++;
@@ -449,7 +460,5 @@
             resCard.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
-</body>
-</html>
 </body>
 </html>
