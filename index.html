@@ -371,11 +371,11 @@
         </div>
     </div>
 
-    <!-- Script with Corrected & Smart Scoring Logic -->
+    <!-- Script with Fixed Case-Insensitive Scoring Logic -->
     <script>
         const answers = {
-            p1q1: 'F', p1q2: 'T', p1q3: 'F', p1q4: 'T', p1q5: 'F',
-            p2q1: 'C', p2q2: 'B', p2q3: 'B', p2q4: 'C', p2q5: 'C',
+            p1q1: 'f', p1q2: 't', p1q3: 'f', p1q4: 't', p1q5: 'f',
+            p2q1: 'c', p2q2: 'b', p2q3: 'b', p2q4: 'c', p2q5: 'c',
             p3q1: ['meanings', 'meaning'],
             p3q2: ['feelings', 'feeling'],
             p3q3: ['big argument', 'big arguments'],
@@ -419,9 +419,11 @@
 
                 let userVal = '';
                 const el = document.querySelector(`[name="${q}"]`);
+                if (!el) continue;
+
                 if (el.type === 'radio') {
                     const checked = document.querySelector(`[name="${q}"]:checked`);
-                    if (checked) userVal = checked.value;
+                    if (checked) userVal = checked.value.trim().toLowerCase();
                 } else {
                     userVal = el.value.trim().toLowerCase();
                 }
@@ -430,7 +432,7 @@
                 if (q.startsWith('p3')) {
                     isCorrect = answers[q].includes(userVal);
                 } else {
-                    isCorrect = (userVal === answers[q].toLowerCase());
+                    isCorrect = (userVal === answers[q]);
                 }
 
                 if (isCorrect) {
